@@ -1,0 +1,267 @@
+@import "@radix-ui/colors/mauve.css";
+@import "@radix-ui/colors/violet.css";
+@import "@radix-ui/colors/red.css";
+@import "@radix-ui/colors/ruby.css";
+@import "@radix-ui/colors/crimson.css";
+@import "@radix-ui/colors/pink.css";
+
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 10px;
+  background-color: var(--mauve-2);
+  color: var(--violet-12);
+
+  --ui-element-padding: 8px;
+
+  --section-interactive-height: 24px;
+  --section-interactive-width: 24px;
+  --section-gap: 8px;
+  --section-content-width: 128px;
+
+  --elements-gap: 12px;
+
+  & * {
+    box-sizing: border-box;
+  }
+}
+
+div.add-section-menubar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: var(--section-gap);
+  padding: var(--ui-element-padding);
+}
+
+div.section-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--elements-gap);
+}
+
+button.add-section-button {
+
+  &.A {
+    --button-background-color: var(--ruby-9);
+    --button-background-color-hovered: var(--ruby-10);
+    --button-background-color-active: var(--ruby-9);
+  }
+  &.B {
+    --button-background-color: var(--crimson-9);
+    --button-background-color-hovered: var(--crimson-10);
+    --button-background-color-active: var(--crimson-9);
+  }
+  &.C {
+    --button-background-color: var(--pink-9);
+    --button-background-color-hovered: var(--pink-10);
+    --button-background-color-active: var(--pink-9);
+  }
+
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 10px;
+
+  width: var(--section-interactive-width);
+  height: var(--section-interactive-height);
+  font-weight: 900;
+  line-height: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: calc(var(--section-interactive-height) * 2);
+  color: var(--mauve-1);
+  border: none;
+  box-shadow: 0px 0px 0px 0px var(--button-background-color);
+  transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+  background-color: var(--button-background-color);
+
+  &:hover {
+    background-color: var(--button-background-color-hovered);
+    box-shadow: 0px 0px 1px 1px var(--button-background-color);
+  }
+
+  &:active {
+    background-color: var(--button-background-color-active);
+    box-shadow: 0px 0px 4px 1px var(--button-background-color);
+  }
+}
+
+section.websocket-section {
+
+  &.A {
+    --section-background: var(--ruby-3);
+    --section-background-unavailable: var(--ruby-2);
+    --section-color: var(--mauve-1);
+    --indicator-background: var(--ruby-2);
+    --indicator-color: var(--ruby-12);
+    --progress-foreground: var(--ruby-9);
+    --progress-background: var(--ruby-3);
+    --progress-border: var(--ruby-6);
+    --progress-color-neutral: var(--mauve-11);
+    --progress-color-important: var(--ruby-12);
+    --close-button-color: var(--ruby-12);
+    --close-button-background: var(--ruby-3);
+    --close-button-background-hover: var(--ruby-4);
+    --close-button-background-active: var(--ruby-5);
+    --close-button-border: var(--ruby-7);
+    --close-button-border-hover: var(--ruby-8);
+    --close-button-border-active: var(--ruby-8);
+  }
+
+  &.B {
+    --section-background: var(--crimson-3);
+    --section-background-unavailable: var(--crimson-2);
+    --section-color: var(--mauve-1);
+    --indicator-background: var(--crimson-2);
+    --indicator-color: var(--crimson-12);
+    --progress-foreground: var(--crimson-9);
+    --progress-background: var(--crimson-3);
+    --progress-border: var(--crimson-6);
+    --progress-color-neutral: var(--mauve-11);
+    --progress-color-important: var(--crimson-12);
+    --close-button-color: var(--crimson-12);
+    --close-button-background: var(--crimson-3);
+    --close-button-background-hover: var(--crimson-4);
+    --close-button-background-active: var(--crimson-5);
+    --close-button-border: var(--crimson-7);
+    --close-button-border-hover: var(--crimson-8);
+    --close-button-border-active: var(--crimson-8);
+  }
+
+  &.C {
+    --section-background: var(--pink-3);
+    --section-background-unavailable: var(--pink-2);
+    --section-color: var(--mauve-1);
+    --indicator-background: var(--pink-2);
+    --indicator-color: var(--pink-12);
+    --progress-foreground: var(--pink-9);
+    --progress-background: var(--pink-3);
+    --progress-border: var(--pink-6);
+    --progress-color-neutral: var(--mauve-11);
+    --progress-color-important: var(--pink-12);
+    --close-button-color: var(--pink-12);
+    --close-button-background: var(--pink-3);
+    --close-button-background-hover: var(--pink-4);
+    --close-button-background-active: var(--pink-5);
+    --close-button-border: var(--pink-7);
+    --close-button-border-hover: var(--pink-8);
+    --close-button-border-active: var(--pink-8);
+  }
+
+  .source-indicator {
+    order: 1;
+    width: var(--section-interactive-width);
+    height: var(--section-interactive-height);
+    font-weight: 900;
+    line-height: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: calc(var(--section-interactive-height) * 2);
+    color: var(--indicator-color);
+    background-color: var(--indicator-background);
+  }
+
+  .data {
+    --progress-width: 100%;
+    position: relative;
+    order: 2;
+    width: var(--section-content-width);
+    height: var(--section-interactive-height);
+    border-radius: calc(var(--section-interactive-height) * 2);
+    border: none;
+    box-shadow: 0px 0px 0px 1px var(--progress-border);
+    display: flex;
+    flex-direction: row;
+    font-size: 10px;
+    text-transform: uppercase;
+    user-select: none;
+    display: flex;
+    background-color: var(--progress-background);
+    overflow: hidden;
+
+    & div {
+      transition: width 0.5s ease-out;
+      background-color: var(--progress-foreground);
+      height: var(--section-interactive-height);
+      width: var(--progress-width);
+
+      animation: 0.3s ease-out 0s normal both fill-progress;
+    }
+
+    &.INITIAL, &.UNPARSEABLE, &.CRC_FAILED {
+      justify-content: center;
+      align-items: center;
+    }
+
+    &.OK {
+      justify-content: start;
+      align-items: center;
+    }
+
+    &.INITIAL {
+      color: var(--progress-color-neutral);
+    }
+  
+    &.UNPARSEABLE, &.CRC_FAILED {
+      font-weight: 900;
+      color: var(--progress-color-important);
+    }
+  }
+
+  button.close-section-button {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 10px;
+    order: 3;
+    padding: 0px;
+    font-weight: 900;
+    line-height: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--section-interactive-width);
+    height: var(--section-interactive-height);
+    color: var(--close-button-color);
+    background-color: var(--close-button-background);
+    border: none;
+    box-shadow: 0px 0px 0px 1px var(--close-button-border);
+    border-radius: calc(var(--section-interactive-height) * 2);
+
+    transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out, color 0.3s ease-out;
+
+    &:hover {
+      background-color: var(--close-button-background-hover);
+    box-shadow: 0px 0px 0px 2px var(--close-button-border-hover);
+    }
+
+    &:active {
+      background-color: var(--close-button-background-active);
+    box-shadow: 0px 0px 2px 2px var(--close-button-border-active);
+    }
+  }
+
+  display: flex;
+  flex-direction: row;
+  gap: var(--section-gap);
+  width: fit-content;
+  height: fit-content;
+  padding: var(--ui-element-padding);
+  flex: 0 0 auto;
+  border-radius: 32px;
+  background-color: var(--section-background);
+  transition: background-color 0.5s ease-out;
+
+  &:has(> .INITIAL) {
+    background-color: var(--section-background-unavailable);
+  }
+}
+
+@keyframes fill-progress {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
