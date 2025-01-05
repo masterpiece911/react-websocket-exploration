@@ -6,10 +6,23 @@
 @import "@radix-ui/colors/pink.css";
 
 :root {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
   font-size: 10px;
   background-color: var(--mauve-2);
   color: var(--violet-12);
+
+  --body-margin: 32px;
 
   --ui-element-padding: 8px;
 
@@ -20,9 +33,31 @@
 
   --elements-gap: 12px;
 
+  --section-width: calc(4 * var(--section-gap) + 2 * var(--section-interactive-width) + var(--section-content-width));
+
   & * {
     box-sizing: border-box;
   }
+}
+
+body {
+  margin: var(--body-margin);
+}
+
+div.frameworks {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  gap: var(--elements-gap);
+
+}
+
+div.framework-container {
+  width: 100%;
+  height: 100%;
+  min-width: calc(2 * var(--ui-element-padding) + --section-width);
+  padding: var(--ui-element-padding);
 }
 
 div.add-section-menubar {
@@ -31,18 +66,16 @@ div.add-section-menubar {
   justify-content: flex-start;
   align-items: center;
   gap: var(--section-gap);
-  padding: var(--ui-element-padding);
 }
 
 div.section-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--section-width), 1fr));
   gap: var(--elements-gap);
+  margin-block: var(--ui-element-padding);
 }
 
 button.add-section-button {
-
   &.A {
     --button-background-color: var(--ruby-9);
     --button-background-color-hovered: var(--ruby-10);
@@ -59,7 +92,18 @@ button.add-section-button {
     --button-background-color-active: var(--pink-9);
   }
 
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
   font-size: 10px;
 
   width: var(--section-interactive-width);
@@ -73,7 +117,9 @@ button.add-section-button {
   color: var(--mauve-1);
   border: none;
   box-shadow: 0px 0px 0px 0px var(--button-background-color);
-  transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+  transition:
+    background-color 0.3s ease-out,
+    box-shadow 0.3s ease-out;
   background-color: var(--button-background-color);
 
   &:hover {
@@ -88,7 +134,6 @@ button.add-section-button {
 }
 
 section.websocket-section {
-
   &.A {
     --section-background: var(--ruby-3);
     --section-background-unavailable: var(--ruby-2);
@@ -167,8 +212,9 @@ section.websocket-section {
     --progress-width: 100%;
     position: relative;
     order: 2;
-    width: var(--section-content-width);
+    flex: 1 1 auto;
     height: var(--section-interactive-height);
+    min-width: var(--section-content-width);
     border-radius: calc(var(--section-interactive-height) * 2);
     border: none;
     box-shadow: 0px 0px 0px 1px var(--progress-border);
@@ -177,7 +223,6 @@ section.websocket-section {
     font-size: 10px;
     text-transform: uppercase;
     user-select: none;
-    display: flex;
     background-color: var(--progress-background);
     overflow: hidden;
 
@@ -186,11 +231,12 @@ section.websocket-section {
       background-color: var(--progress-foreground);
       height: var(--section-interactive-height);
       width: var(--progress-width);
-
       animation: 0.3s ease-out 0s normal both fill-progress;
     }
 
-    &.INITIAL, &.UNPARSEABLE, &.CRC_FAILED {
+    &.INITIAL,
+    &.UNPARSEABLE,
+    &.CRC_FAILED {
       justify-content: center;
       align-items: center;
     }
@@ -203,15 +249,27 @@ section.websocket-section {
     &.INITIAL {
       color: var(--progress-color-neutral);
     }
-  
-    &.UNPARSEABLE, &.CRC_FAILED {
+
+    &.UNPARSEABLE,
+    &.CRC_FAILED {
       font-weight: 900;
       color: var(--progress-color-important);
     }
   }
 
   button.close-section-button {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      "Open Sans",
+      "Helvetica Neue",
+      sans-serif;
     font-size: 10px;
     order: 3;
     padding: 0px;
@@ -228,23 +286,26 @@ section.websocket-section {
     box-shadow: 0px 0px 0px 1px var(--close-button-border);
     border-radius: calc(var(--section-interactive-height) * 2);
 
-    transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out, color 0.3s ease-out;
+    transition:
+      box-shadow 0.3s ease-out,
+      background-color 0.3s ease-out,
+      color 0.3s ease-out;
 
     &:hover {
       background-color: var(--close-button-background-hover);
-    box-shadow: 0px 0px 0px 2px var(--close-button-border-hover);
+      box-shadow: 0px 0px 0px 2px var(--close-button-border-hover);
     }
 
     &:active {
       background-color: var(--close-button-background-active);
-    box-shadow: 0px 0px 2px 2px var(--close-button-border-active);
+      box-shadow: 0px 0px 2px 2px var(--close-button-border-active);
     }
   }
 
   display: flex;
   flex-direction: row;
   gap: var(--section-gap);
-  width: fit-content;
+  width: 100%;
   height: fit-content;
   padding: var(--ui-element-padding);
   flex: 0 0 auto;
