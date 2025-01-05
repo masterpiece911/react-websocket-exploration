@@ -227,6 +227,9 @@ section.websocket-section {
     overflow: hidden;
 
     & div {
+      position: absolute;
+      left: 0;
+      right: 0;
       transition: width 0.5s ease-out;
       background-color: var(--progress-foreground);
       height: var(--section-interactive-height);

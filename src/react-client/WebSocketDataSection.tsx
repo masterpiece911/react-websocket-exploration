@@ -1,7 +1,14 @@
 import clsx from "clsx";
-import { WebSocketDataSource } from "../ws-manager/types";
 import { useWebSocketData } from "../ws-manager/useWebSocketData";
+import { WebSocketDataSource } from "../ws-manager/types";
 import { getTextAfterLastSlash } from "../common-client/sourceHelperFunctions";
+
+const statusText: Record<'INITIAL' | 'OK' | 'UNPARSEABLE' | 'CRC_FAILED', string> = {
+  INITIAL: 'No data received yet.',
+  OK: '',
+  UNPARSEABLE: 'Data unparseable',
+  CRC_FAILED: 'Data failed CRC'
+}
 
 export default function WebSocketDataSection({
   sourceURL,
@@ -20,11 +27,13 @@ export default function WebSocketDataSection({
       </button>
       <span className="source-indicator">{source}</span>
       <div className={clsx("data", data.status)}>
-        {data.status === "INITIAL" && (
+        <div style={{ "--progress-width": `${data.status === 'OK' ? data.data.value * 100 : 0}%`} as React.CSSProperties} />
+        <span>{statusText[data.status]}</span>
+        {/* {data.status === "INITIAL" && (
           <>
             <div
               key="progress-bar"
-              style={{ "--progress-width": "0%" } as any}
+              style={{ "--progress-width": "0%" } as React.CSSProperties}
             />
             <span>No data received yet</span>
           </>
@@ -54,7 +63,7 @@ export default function WebSocketDataSection({
             />
             <span>Data failed CRC</span>
           </>
-        )}
+        )} */}
       </div>
     </section>
   );
