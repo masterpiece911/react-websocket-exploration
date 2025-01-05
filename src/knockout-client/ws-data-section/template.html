@@ -1,0 +1,46 @@
+<section
+  data-bind="
+    css: {
+      'websocket-section': true,
+      [ source ]: true,
+    }
+  "
+>
+  <span
+    class="source-indicator"
+    data-bind="text: source"
+  ></span>
+  <button
+    class="close-section-button"
+    type="button"
+    data-bind="
+      click: onClose
+    "
+  >
+    X
+  </button>
+  <div
+    data-bind="
+      css: {
+        data: true,
+        INITIAL: status() === 'INITIAL',
+        OK: status() === 'OK',
+        UNPARSEABLE: status() === 'UNPARSEABLE',
+        CRC_FAILED: status() === 'CRC_FAILED',
+      }
+    "
+  >
+    <div
+      data-bind="
+        style: {
+          '--progress-width': data
+        }
+      "
+    ></div>
+    <span
+      data-bind="
+        text: text
+      "
+    ></span>
+  </div>
+</section>

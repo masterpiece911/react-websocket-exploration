@@ -2,12 +2,32 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>React Websocket Exploration</title>
+    <link
+      rel="preload"
+      href="/src/assets/style.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="/src/assets/style.css" />
+    </noscript>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <h1>Websocket Data Viewer</h1>
+    <div class="frameworks">
+      <div class="framework-container">
+        <h2>Knockout</h2>
+        <!-- ko component: "main" -->
+        <!-- /ko -->
+      </div>
+      <div class="framework-container">
+        <h2>React</h2>
+        <div id="react-root"></div>
+      </div>
+    </div>
+    <script type="module" src="/src/react-client/main.tsx"></script>
+    <script type="module" src="/src/knockout-client/main.ts"></script>
   </body>
 </html>

@@ -1,23 +1,29 @@
 // WebSocketManager.ts
-import { WebSocketDataMap, WebSocketStatus } from './types';
-import { crcCheck } from './crcCheck';
+import {
+  WebSocketDataMap,
+  WebSocketDataSource,
+  WebSocketStatus,
+} from "./types";
+import { crcCheck } from "./crcCheck";
 
 class WebSocketManager {
-  private connections = new Map<keyof WebSocketDataMap, WebSocket>();
+  private connections = new Map<WebSocketDataSource, WebSocket>();
   private listeners = new Map<
-    keyof WebSocketDataMap,
+    WebSocketDataSource,
     Set<(status: WebSocketStatus<any>) => void>
   >();
-  public latestData: Partial<Record<keyof WebSocketDataMap, WebSocketStatus<any>>> = {};
+  public latestData: Partial<
+    Record<WebSocketDataSource, WebSocketStatus<any>>
+  > = {};
 
   // Track intentional disconnects
-  private disconnectIntent = new Map<keyof WebSocketDataMap, boolean>();
+  private disconnectIntent = new Map<WebSocketDataSource, boolean>();
 
-  subscribe<T extends keyof WebSocketDataMap>(
+  subscribe<T extends WebSocketDataSource>(
     source: T,
-    callback: (status: WebSocketStatus<WebSocketDataMap[T]>) => void
+    callback: (status: WebSocketStatus<WebSocketDataMap[T]>) => void,
   ): () => void {
-    console.log(`subscribing callback ${callback} to source ${source}`)
+    console.log(`subscribing callback ${callback} to source ${source}`);
     if (!this.listeners.has(source)) {
       this.listeners.set(source, new Set());
       this.latestData[source] = { status: "INITIAL" };
@@ -33,7 +39,7 @@ class WebSocketManager {
     return () => this.unsubscribe(source, callback);
   }
 
-  private createConnection<T extends keyof WebSocketDataMap>(source: T) {
+  private createConnection<T extends WebSocketDataSource>(source: T) {
     const ws = new WebSocket(source);
     this.connections.set(source, ws);
 
@@ -41,7 +47,10 @@ class WebSocketManager {
     this.disconnectIntent.set(source, false);
 
     ws.onmessage = (event) => {
-      console.log(`received data on source ${source}`, {event, data: event.data})
+      console.log(`received data on source ${source}`, {
+        event,
+        data: event.data,
+      });
       const rawData = event.data;
 
       // Attempt JSON parse
@@ -66,7 +75,10 @@ class WebSocketManager {
       if (!isIntentional) {
         // Attempt to reconnect only if the disconnect was unintentional
         setTimeout(() => {
-          if (this.listeners.has(source) && this.listeners.get(source)!.size > 0) {
+          if (
+            this.listeners.has(source) &&
+            this.listeners.get(source)!.size > 0
+          ) {
             this.createConnection(source);
           }
         }, 1000);
@@ -77,31 +89,34 @@ class WebSocketManager {
     };
   }
 
-  private updateStatus<T extends keyof WebSocketDataMap>(
+  private updateStatus<T extends WebSocketDataSource>(
     source: T,
-    status: WebSocketStatus<WebSocketDataMap[T]>
+    status: WebSocketStatus<WebSocketDataMap[T]>,
   ) {
-    console.log(`Received update on source ${source}`, {status})
+    console.log(`Received update on source ${source}`, { status });
     this.latestData[source] = status;
     this.notifyListeners(source, status);
   }
 
-  private notifyListeners<T extends keyof WebSocketDataMap>(
+  private notifyListeners<T extends WebSocketDataSource>(
     source: T,
-    status: WebSocketStatus<WebSocketDataMap[T]>
+    status: WebSocketStatus<WebSocketDataMap[T]>,
   ) {
     const sourceListeners = this.listeners.get(source);
-    console.log(`Notifying listeners for source ${source}`, {sourceListeners, connections: this.connections})
+    console.log(`Notifying listeners for source ${source}`, {
+      sourceListeners,
+      connections: this.connections,
+    });
     if (sourceListeners) {
       sourceListeners.forEach((callback) => callback(status));
     }
   }
 
-  private unsubscribe<T extends keyof WebSocketDataMap>(
+  private unsubscribe<T extends WebSocketDataSource>(
     source: T,
-    callback: (status: WebSocketStatus<WebSocketDataMap[T]>) => void
+    callback: (status: WebSocketStatus<WebSocketDataMap[T]>) => void,
   ) {
-    console.log(`Unsubscribing listener ${callback} from source ${source}`)
+    console.log(`Unsubscribing listener ${callback} from source ${source}`);
     const sourceListeners = this.listeners.get(source);
     if (sourceListeners) {
       sourceListeners.delete(callback);
@@ -111,29 +126,29 @@ class WebSocketManager {
     }
   }
 
-private disconnect<T extends keyof WebSocketDataMap>(source: T) {
-    console.log(`disconnecting from source ${source}`)
+  private disconnect<T extends WebSocketDataSource>(source: T) {
+    console.log(`disconnecting from source ${source}`);
     // Set the intentional disconnect flag
     this.disconnectIntent.set(source, true);
-    
+
     const ws = this.connections.get(source);
     if (ws) {
       // Check the readyState before attempting to close
       if (ws.readyState === WebSocket.CONNECTING) {
         // If still connecting, add an event listener to close when ready
         ws.addEventListener("open", () => {
-            console.log('Closing websocket after establishing connection')
-            ws.close()
+          console.log("Closing websocket after establishing connection");
+          ws.close();
         });
       } else if (ws.readyState === WebSocket.OPEN) {
         // Close the connection if already open
-        console.log('Closing already connected websocket')
+        console.log("Closing already connected websocket");
         ws.close();
       }
-  
+
       // Remove the WebSocket from the connections map
       this.connections.delete(source);
-      delete this.latestData[source]
+      delete this.latestData[source];
     }
   }
 }

@@ -10,8 +10,8 @@ have emerged that basically bundle React and routing-based data fetching strateg
 address the issue of how to connect to a live data source and where to store it in the context of React.
 
 In my personal work experience, we have tried to solve the issue by establishing the websocket connection on the component level. A
-generic hook can be provided with a config object that accepts callbacks for the websocket event callbacks (onmessage, onclose, 
-onopen). When the component unmounts, the hook closes the websocket connection. While an elegant solution, it does not solve storage 
+generic hook can be provided with a config object that accepts callbacks for the websocket event callbacks (onmessage, onclose,
+onopen). When the component unmounts, the hook closes the websocket connection. While an elegant solution, it does not solve storage
 of the websocket data, and critically, only provides the data to children of this node. In addition, it is a purely React-centric
 solution, and does not work cross-framework.
 
@@ -39,28 +39,29 @@ Run `npm install` to install all dependendencies of this project.
 
 ## Technical implementation
 
-This project introduces a `WebsocketManager` which handles all websocket connections and caches data for endpoints as long as a single consumer registers an intent to consume a data source. The Manager is acting as an *Observable* and consumers are *Observers*. This data is injected into React using [`useSyncExternalStore`](https://react.dev/reference/react/useSyncExternalStore), which is wrapped in hook `useWebSocketData.ts`. React no longer stores any websocket data, rather, the `WebsocketManager` is also a very minimal state management implementation.
+This project introduces a `WebsocketManager` which handles all websocket connections and caches data for endpoints as long as a single consumer registers an intent to consume a data source. The Manager is acting as an _Observable_ and consumers are _Observers_. This data is injected into React using [`useSyncExternalStore`](https://react.dev/reference/react/useSyncExternalStore), which is wrapped in hook `useWebSocketData.ts`. React no longer stores any websocket data, rather, the `WebsocketManager` is also a very minimal state management implementation. As an additional framework example, the same frontend is also implemented using [knockout.js](https://knockoutjs.com/index.html), including the Knockout adapter, in `webSocketObservable.ts`.
 
 ## Demo
 
-In the demo, you can observe the following:
+In the demo, you can observe the following (framework-independent):
 
 1. When sections are added, only one websocket connection per data source will be active at any given moment.
 
 > You can verify this behavior in the browser devtools.
 
 2. Initially, the websocket manager returns `{ status: 'INITIAL' }` as data.
-> The demo ui will display "no data received yet".
+
+   > The demo ui will display "no data received yet".
 
 3. As soon as a data source receives data from the server, all consumers are updated immediately.
 
-0. If any component has already received data from the server, adding a new component with the same data source will render data immediately, as it receives a cached version of the data.
+4. If any component has already received data from the server, adding a new component with the same data source will render data immediately, as it receives a cached version of the data.
 
-0. If all components with the same data source are unmounted, mounting a new component with this data source will again display "no data received yet", as the cache is purged.
+5. If all components with the same data source are unmounted, mounting a new component with this data source will again display "no data received yet", as the cache is purged.
 
-0. If all consumers of an endpoint unmount, the WebsocketManager will close the websocket connection.
+6. If all consumers of an endpoint unmount, the WebsocketManager will close the websocket connection.
 
-0. If the server sends unexpected data (such as a string value when expecting a JSON value) the consumers will receive a `{ status: 'UNPARSEABLE' }` message from the WebsocketManager.
+7. If the server sends unexpected data (such as a string value when expecting a JSON value) the consumers will receive a `{ status: 'UNPARSEABLE' }` message from the WebsocketManager.
 
 ## Vite / React / Typescript template documentation
 
@@ -82,11 +83,11 @@ export default tseslint.config({
   languageOptions: {
     // other options...
     parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
       tsconfigRootDir: import.meta.dirname,
     },
   },
-})
+});
 ```
 
 - Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
@@ -95,11 +96,11 @@ export default tseslint.config({
 
 ```js
 // eslint.config.js
-import react from 'eslint-plugin-react'
+import react from "eslint-plugin-react";
 
 export default tseslint.config({
   // Set the react version
-  settings: { react: { version: '18.3' } },
+  settings: { react: { version: "18.3" } },
   plugins: {
     // Add the react plugin
     react,
@@ -108,7 +109,7 @@ export default tseslint.config({
     // other rules...
     // Enable its recommended rules
     ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
+    ...react.configs["jsx-runtime"].rules,
   },
-})
+});
 ```
