@@ -1,8 +1,8 @@
-import "../assets/style.css";
-import ko from "knockout"
+import '../assets/style.css'
+import ko from 'knockout'
 
-import "./ws-data-section"
-import "./ws-sections-header"
+import './ws-data-section'
+import './ws-sections-header'
 
 import AppViewModel from './App'
 
@@ -29,6 +29,6 @@ const template = `
 ko.components.register('main', { template })
 
 const context = new AppViewModel()
-console.log({context})
+console.log({ context })
 
 ko.applyBindings(context)

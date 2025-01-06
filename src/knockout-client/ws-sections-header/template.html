@@ -1,9 +1,9 @@
 <div class="add-section-menubar">
   <span>Select Source</span>
   <!-- ko foreach: buttons -->
-    <button
-      type="button"
-      data-bind="
+  <button
+    type="button"
+    data-bind="
         css: {
           'add-section-button': true,
           [ $data.label ]: true,
@@ -11,6 +11,6 @@
         click: () => $parent.addSection($data.source),
         text: $data.label
       "
-    ></button>
+  ></button>
   <!-- /ko -->
 </div>
