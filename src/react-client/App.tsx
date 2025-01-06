@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { WebSocketDataSource } from "../ws-manager/types";
-import { INITIAL_VALUE } from "../common-client/sources";
-import DataSectionHeader from "./DataSectionHeader";
-import WebSocketDataSection from "./WebSocketDataSection";
+import { useState } from 'react'
+import { WebSocketDataSource } from '../ws-manager/types'
+import { INITIAL_VALUE } from '../common-client/sources'
+import DataSectionHeader from './DataSectionHeader'
+import WebSocketDataSection from './WebSocketDataSection'
 
 const App = () => {
-  const [sections, setSections] =
-    useState<WebSocketDataSource[]>(INITIAL_VALUE);
+  const [sections, setSections] = useState<WebSocketDataSource[]>(INITIAL_VALUE)
 
   return (
     <>
@@ -30,7 +29,7 @@ const App = () => {
         ))}
       </div>
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App
