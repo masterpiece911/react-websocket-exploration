@@ -11,7 +11,7 @@ import {
 import {
   WebSocketObservable,
   createWebSocketObservable,
-} from '../../ws-manager/webSocketObservable'
+} from '../../ws-manager/adapters/knockout/webSocketObservable'
 
 function isCallback(func: unknown): func is () => void {
   return typeof func === 'function' && func.length === 0

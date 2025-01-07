@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useWebSocketData } from '../ws-manager/useWebSocketData'
+import { useWebSocketData } from '../ws-manager/adapters/react/useWebSocketData'
 import { WebSocketDataSource } from '../ws-manager/types'
 import { getTextAfterLastSlash } from '../common-client/sourceHelperFunctions'
 

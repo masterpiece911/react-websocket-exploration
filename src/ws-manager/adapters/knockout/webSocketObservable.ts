@@ -1,6 +1,10 @@
 import ko from 'knockout'
-import webSocketManager from './WebSocketManager'
-import { WebSocketDataMap, WebSocketDataSource, WebSocketStatus } from './types'
+import webSocketManager from '../../WebSocketManager'
+import {
+  WebSocketDataMap,
+  WebSocketDataSource,
+  WebSocketStatus,
+} from '../../types'
 
 export type WebSocketObservable<T extends WebSocketDataSource> =
   KnockoutObservable<WebSocketStatus<WebSocketDataMap[T]>> & {
