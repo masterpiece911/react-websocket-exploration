@@ -1,7 +1,11 @@
 // useWebSocketData.ts
 import { useSyncExternalStore, useCallback } from 'react'
-import webSocketManager from './WebSocketManager'
-import { WebSocketDataMap, WebSocketDataSource, WebSocketStatus } from './types'
+import webSocketManager from '../../WebSocketManager'
+import {
+  WebSocketDataMap,
+  WebSocketDataSource,
+  WebSocketStatus,
+} from '../../types'
 
 const INITIAL_VALUE = { status: 'INITIAL' } as const
 
