@@ -7,5 +7,3 @@ ko.components.register('ws-data-section', {
   viewModel,
   template,
 })
-
-console.log({ viewModel, template })

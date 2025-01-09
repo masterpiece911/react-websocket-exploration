@@ -1,10 +1,10 @@
 import ko from 'knockout'
-import webSocketManager from '../../WebSocketManager'
+import webSocketManager from '../../ws-manager'
 import {
   WebSocketDataMap,
   WebSocketDataSource,
   WebSocketStatus,
-} from '../../types'
+} from '../../ws-manager/types'
 
 export type WebSocketObservable<T extends WebSocketDataSource> =
   KnockoutObservable<WebSocketStatus<WebSocketDataMap[T]>> & {
@@ -16,7 +16,7 @@ export function createWebSocketObservable<T extends WebSocketDataSource>(
 ): WebSocketObservable<T> {
   // Create a Knockout observable for WebSocket status1
   const statusObservable = ko.observable<WebSocketStatus<WebSocketDataMap[T]>>(
-    webSocketManager.latestData[source] || { status: 'INITIAL' },
+    webSocketManager.getLatestData(source) || { status: 'INITIAL' },
   )
 
   // Subscribe to the WebSocketManager

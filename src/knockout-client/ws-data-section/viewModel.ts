@@ -11,7 +11,7 @@ import {
 import {
   WebSocketObservable,
   createWebSocketObservable,
-} from '../../ws-manager/adapters/knockout/webSocketObservable'
+} from '../../ws-manager-adapters/knockout/webSocketObservable'
 
 function isCallback(func: unknown): func is () => void {
   return typeof func === 'function' && func.length === 0
@@ -57,17 +57,11 @@ export default class DataSection<S extends WebSocketDataSource> {
     })
 
     this.text = ko.pureComputed(() => {
-      const { status } = this.connection()
-      const textMap: Record<
-        WebSocketStatus<WebSocketDataMap[S]>['status'],
-        string
-      > = {
-        INITIAL: 'No data received yet',
-        UNPARSEABLE: 'Data unparseable',
-        CRC_FAILED: 'Data failed CRC',
-        OK: '',
-      }
-      return textMap[status]
+      const wsData = this.connection()
+      if (wsData.status === 'INITIAL') return 'No data received yet'
+      if (wsData.status === 'INVALID') return wsData.reason
+
+      return ''
     })
 
     this.onClose = onClose

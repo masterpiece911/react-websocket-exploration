@@ -29,6 +29,5 @@ const template = `
 ko.components.register('main', { template })
 
 const context = new AppViewModel()
-console.log({ context })
 
 ko.applyBindings(context)

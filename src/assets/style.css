@@ -240,8 +240,7 @@ section.websocket-section {
     }
 
     &.INITIAL,
-    &.UNPARSEABLE,
-    &.CRC_FAILED {
+    &.INVALID {
       justify-content: center;
       align-items: center;
     }
@@ -255,8 +254,7 @@ section.websocket-section {
       color: var(--progress-color-neutral);
     }
 
-    &.UNPARSEABLE,
-    &.CRC_FAILED {
+    &.INVALID {
       font-weight: 900;
       color: var(--progress-color-important);
     }

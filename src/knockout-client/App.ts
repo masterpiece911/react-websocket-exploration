@@ -35,7 +35,7 @@ export default class App {
   }
 
   removeSource(index: unknown) {
-    console.log('in remove source', { index })
+    'in remove source', { index }
     if (typeof index !== 'number') {
       return
     }

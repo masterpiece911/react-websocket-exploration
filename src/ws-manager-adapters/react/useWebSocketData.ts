@@ -1,26 +1,26 @@
 // useWebSocketData.ts
 import { useSyncExternalStore, useCallback } from 'react'
-import webSocketManager from '../../WebSocketManager'
+import webSocketManager from '../../ws-manager'
 import {
   WebSocketDataMap,
   WebSocketDataSource,
   WebSocketStatus,
-} from '../../types'
+} from '../../ws-manager/types'
 
 const INITIAL_VALUE = { status: 'INITIAL' } as const
 
-export function useWebSocketData<T extends WebSocketDataSource>(
-  source: T,
-): WebSocketStatus<WebSocketDataMap[T]> {
+export function useWebSocketData<S extends WebSocketDataSource>(
+  source: S,
+): WebSocketStatus<WebSocketDataMap[S]> {
   const subscribe = useCallback(
-    (callback: (status: WebSocketStatus<WebSocketDataMap[T]>) => void) => {
+    (callback: (status: WebSocketStatus<WebSocketDataMap[S]>) => void) => {
       return webSocketManager.subscribe(source, callback)
     },
     [source],
   )
 
   const getSnapshot = useCallback(() => {
-    return webSocketManager.latestData[source] || INITIAL_VALUE
+    return webSocketManager.getLatestData(source) || INITIAL_VALUE
   }, [source])
 
   return useSyncExternalStore(subscribe, getSnapshot)

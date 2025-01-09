@@ -1,16 +1,12 @@
 import clsx from 'clsx'
-import { useWebSocketData } from '../ws-manager/adapters/react/useWebSocketData'
-import { WebSocketDataSource } from '../ws-manager/types'
+import { useWebSocketData } from '../ws-manager-adapters/react/useWebSocketData'
+import { WebSocketDataSource, WebSocketStatus } from '../ws-manager/types'
 import { getTextAfterLastSlash } from '../common-client/sourceHelperFunctions'
 
-const statusText: Record<
-  'INITIAL' | 'OK' | 'UNPARSEABLE' | 'CRC_FAILED',
-  string
-> = {
-  INITIAL: 'No data received yet.',
-  OK: '',
-  UNPARSEABLE: 'Data unparseable',
-  CRC_FAILED: 'Data failed CRC',
+const getStatusText = (data: WebSocketStatus<unknown>) => {
+  if (data.status === 'INITIAL') return 'No data received yet.'
+  if (data.status === 'INVALID') return data.reason
+  return ''
 }
 
 export default function WebSocketDataSection({
@@ -37,7 +33,7 @@ export default function WebSocketDataSection({
             } as React.CSSProperties
           }
         />
-        <span>{statusText[data.status]}</span>
+        <span>{getStatusText(data)}</span>
         {/* {data.status === "INITIAL" && (
           <>
             <div
