@@ -15,7 +15,8 @@
     "knockout": "^3.5.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "ws": "^8.18.0"
+    "ws": "^8.18.0",
+    "immer": "^10.1.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
