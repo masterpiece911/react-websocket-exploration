@@ -17,9 +17,11 @@ export default class ConnectionsMiddleware {
   }
 
   createConnection<S extends WebSocketDataSource>(source: S) {
+    console.log('in create connection')
     this.disconnectIntent.delete(source)
 
     const ws = new WebSocket(source)
+    console.log('about to set')
     this.managerAPI.setConnection(source, ws)
 
     ws.onmessage = (event) => {
@@ -32,7 +34,9 @@ export default class ConnectionsMiddleware {
 
       if (!isIntentional) {
         setTimeout(() => {
+          console.log('reestablishing connection')
           const listeners = this.managerAPI.getListeners(source)
+          console.log('listeners', { listeners })
           if (listeners.size > 0) {
             this.createConnection(source)
           }
