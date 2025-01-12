@@ -11,6 +11,12 @@ const jsonParsingMiddleware: WebSocketManagerMiddleware =
       return
     }
 
+    if (action.payload.status !== 'OK') {
+      // early return if prior parsing failed
+      next(action)
+      return
+    }
+
     const {
       payload: { raw: rawData },
     } = action
